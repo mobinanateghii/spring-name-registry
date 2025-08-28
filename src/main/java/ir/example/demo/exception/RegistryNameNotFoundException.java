@@ -1,11 +1,11 @@
 package ir.example.demo.exception;
 
-public class DuplicateCustomerException extends RuntimeException {
-    public DuplicateCustomerException(String message) {
+public class RegistryNameNotFoundException extends RuntimeException {
+    public RegistryNameNotFoundException(String message) {
         super(message);
     }
 
-    public DuplicateCustomerException(String message, Throwable cause) {
+    public RegistryNameNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 }

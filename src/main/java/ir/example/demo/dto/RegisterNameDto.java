@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NameRegisterDto {
-    private String name;
-    private String reversedName;
-    private int nameLength;
+public class RegisterNameDto {
+    private String firstName;
+    private String lastName;
 }

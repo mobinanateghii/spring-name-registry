@@ -1,4 +1,4 @@
-package ir.example.demo.dto;
+package ir.example.demo.dto.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

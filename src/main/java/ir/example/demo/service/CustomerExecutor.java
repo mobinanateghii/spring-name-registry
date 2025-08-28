@@ -1,2 +1,4 @@
-package ir.example.demo.service;public class CustomerExexutor {
+package ir.example.demo.service;
+
+public class CustomerExecutor {
 }

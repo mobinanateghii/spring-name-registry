@@ -1,11 +1,10 @@
-package ir.example.demo.dto;
+package ir.example.demo.dto.filter;
 
+import ir.example.demo.dto.base.DateRange;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -15,13 +14,11 @@ public class NameRegistryFilterDto {
     private Long id;
     private String firstName;
     private String lastName;
+    private DateRange createdDate;
 
-    private Date fromCreatedDate;
-    private Date toCreatedDate;
+    @Builder.Default
+    private int from = 0;
 
-    private Date fromThruDate;
-    private Date toThruDate;
-
-    private int from;
-    private int size;
+    @Builder.Default
+    private int size = 20;
 }

@@ -2,22 +2,24 @@ package ir.example.demo.model;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@Data
 public class BaseEntity {
 
     private Long authorUserId;
 
     @CreatedDate
-    private Date createdAt;
+    private LocalDateTime createdDate;
 
-    @LastModifiedDate
-    private Date updatedAt;
+    private LocalDateTime thruDate;
 
     @Version
     private Timestamp version;

@@ -1,7 +1,7 @@
 package ir.example.demo.service;
 
 import ir.example.demo.exception.UniqueNameGenerationException;
-import ir.example.demo.model.NameCatalog;
+import ir.example.demo.model.NameRegistry;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -15,16 +15,16 @@ import java.util.stream.LongStream;
 @Service
 public class RandomNameGenerator {
     private static final Long MAX_SEQUENTIAL_COUNT = 1_000_000L;
-    private final List<NameCatalog> nameCatalogs;
-    private final Integer nameCatalogCount;
+    private final List<NameRegistry> nameRegistries;
+    private final Integer totalNameCount;
 
-    public RandomNameGenerator(List<NameCatalog> nameCatalogs) {
-        this.nameCatalogs = nameCatalogs;
-        this.nameCatalogCount = nameCatalogs.size();
+    public RandomNameGenerator(List<NameRegistry> nameRegistries) {
+        this.nameRegistries = nameRegistries;
+        this.totalNameCount = nameRegistries.size();
     }
 
     /**
-     * Generates a set of random full names using the provided NameCatalog list.
+     * Generates a set of random full names using the provided NameRegistry list.
      * The maximum number of unique combinations is defined by {@code maxUniqCount}
      * combination format is {@code firstName + midName + lastName}.
      *
@@ -33,7 +33,7 @@ public class RandomNameGenerator {
      * @throws UniqueNameGenerationException if count > max possible unique combinations
      */
     public Set<String> generate(Long count) {
-        long maxUniqCount = (long) Math.pow(nameCatalogs.size(), 3);
+        long maxUniqCount = (long) Math.pow(nameRegistries.size(), 3);
         Set<String> randomFullNames;
 
         if (maxUniqCount < count)
@@ -60,9 +60,9 @@ public class RandomNameGenerator {
         Random random = new Random();
 
         while (randomFullNames.size() < count) {
-            String randFirstName = nameCatalogs.get(random.nextInt(nameCatalogCount)).getFirstName();
-            String randMidName = nameCatalogs.get(random.nextInt(nameCatalogCount)).getFirstName();
-            String randLastName = nameCatalogs.get(random.nextInt(nameCatalogCount)).getLastName();
+            String randFirstName = nameRegistries.get(random.nextInt(totalNameCount)).getFirstName();
+            String randMidName = nameRegistries.get(random.nextInt(totalNameCount)).getFirstName();
+            String randLastName = nameRegistries.get(random.nextInt(totalNameCount)).getLastName();
             randomFullNames.add(String.format("%s %s %s", randFirstName, randMidName, randLastName));
         }
     }
@@ -78,9 +78,9 @@ public class RandomNameGenerator {
         LongStream.range(0, count)
                 .parallel()
                 .forEach(i -> {
-                    String randFirstName = nameCatalogs.get(ThreadLocalRandom.current().nextInt(nameCatalogCount)).getFirstName();
-                    String randMidName = nameCatalogs.get(ThreadLocalRandom.current().nextInt(nameCatalogCount)).getFirstName();
-                    String randLastName = nameCatalogs.get(ThreadLocalRandom.current().nextInt(nameCatalogCount)).getLastName();
+                    String randFirstName = nameRegistries.get(ThreadLocalRandom.current().nextInt(totalNameCount)).getFirstName();
+                    String randMidName = nameRegistries.get(ThreadLocalRandom.current().nextInt(totalNameCount)).getFirstName();
+                    String randLastName = nameRegistries.get(ThreadLocalRandom.current().nextInt(totalNameCount)).getLastName();
                     randomFullNames.add(String.format("%s %s %s", randFirstName, randMidName, randLastName));
                 });
 
