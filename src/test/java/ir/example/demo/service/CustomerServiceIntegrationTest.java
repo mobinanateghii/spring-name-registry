@@ -27,8 +27,8 @@ public class CustomerServiceIntegrationTest {
     @Test
     void addCustomerName_NewCustomer_Success() {
         String newName = "mobina mobina ntg";
-        assertDoesNotThrow(() -> customerService.addCustomerName(newName));
 
+        assertDoesNotThrow(() -> customerService.addCustomerName(newName));
         assertTrue(customerService.getCustomerNames().contains(newName));
     }
 
@@ -46,8 +46,8 @@ public class CustomerServiceIntegrationTest {
         long start = System.currentTimeMillis();
         List<CustomerProcessedNameDto> result = customerService.sequentialProcessCustomerNames();
         long duration = System.currentTimeMillis() - start;
-        System.out.println(String.format("sequentialProcessCustomerNames run on : %s ms", duration));
 
+        System.out.println(String.format("sequentialProcessCustomerNames run on : %s ms", duration));
         assertFalse(result.isEmpty());
         assertNotNull(result.get(0).getReversedName());
     }
@@ -57,8 +57,8 @@ public class CustomerServiceIntegrationTest {
         long start = System.currentTimeMillis();
         List<CustomerProcessedNameDto> result = customerService.parallelProcessCustomerNames();
         long duration = System.currentTimeMillis() - start;
-        System.out.println(String.format("parallelProcessCustomerNames run on : %s ms", duration));
 
+        System.out.println(String.format("parallelProcessCustomerNames run on : %s ms", duration));
         assertFalse(result.isEmpty());
         assertNotNull(result.get(0).getReversedName());
     }
@@ -68,8 +68,8 @@ public class CustomerServiceIntegrationTest {
         long start = System.currentTimeMillis();
         List<CustomerProcessedNameDto> result = customerService.explicitParallelProcessCustomerNames();
         long duration = System.currentTimeMillis() - start;
-        System.out.println(String.format("explicitParallelProcessCustomerNames run on : %s ms", duration));
 
+        System.out.println(String.format("explicitParallelProcessCustomerNames run on : %s ms", duration));
         assertFalse(result.isEmpty());
         assertNotNull(result.get(0).getReversedName());
     }
