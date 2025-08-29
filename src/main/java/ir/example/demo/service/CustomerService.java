@@ -31,7 +31,7 @@ public class CustomerService {
      * H2 database, {@code @PostConstruct} runs before data from {@code data.sql}
      * This means the NameRegistry table will be empty!
      */
-    private Set<String> getCustomerNames() {
+    public Set<String> getCustomerNames() {
         if (Objects.isNull(customerNames) || customerNames.isEmpty()) {
             List<NameRegistry> nameRegistries = nameRegistryService.getNames(new NameRegistryFilterDto());
             RandomNameGenerator randomNameGenerator = new RandomNameGenerator(nameRegistries);
@@ -43,13 +43,13 @@ public class CustomerService {
 
     /**
      * Add new customer name to set of customer names.
-     * Before adding, it ensures that the random customer names are initialized {@code getCustomerNames()}.
+     * Before adding, it ensures that the random customer names are initialized {@code this.getCustomerNames()}.
      *
      * @param name the name of the customer
      * @throws DuplicateCustomerException if the customer name already exists in the set
      */
     public void addCustomerName(String name) {
-        boolean isUniq = getCustomerNames().add(name);
+        boolean isUniq = this.getCustomerNames().add(name);
         if (!isUniq)
             throw new DuplicateCustomerException(String.format("Customer by name : %s ,is already exist!", name));
     }
@@ -65,7 +65,7 @@ public class CustomerService {
     public List<CustomerProcessedNameDto> sequentialProcessCustomerNames() {
         List<CustomerProcessedNameDto> processedNameList = new ArrayList<>();
 
-        for (String name : getCustomerNames()) {
+        for (String name : this.getCustomerNames()) {
             CustomerProcessedNameDto processedName = CustomerProcessedNameDto.builder()
                     .name(name)
                     .nameLength(name.length())
@@ -83,7 +83,7 @@ public class CustomerService {
      * @return processed list of CustomerProcessedNameDto
      */
     public List<CustomerProcessedNameDto> parallelProcessCustomerNames() {
-        return getCustomerNames()
+        return this.getCustomerNames()
                 .parallelStream()
                 .map(name -> CustomerProcessedNameDto.builder()
                         .name(name)
@@ -102,7 +102,7 @@ public class CustomerService {
      */
     public List<CustomerProcessedNameDto> explicitParallelProcessCustomerNames() throws ExecutionException, InterruptedException {
         List<CustomerProcessedNameDto> results = new ArrayList<>();
-        Set<String> customerNames = getCustomerNames();
+        Set<String> customerNames = this.getCustomerNames();
 
         int chunkSize = (int) Math.ceil((double) customerNames.size() / CUSTOMER_PROCESS_THREAD_COUNT);
         List<List<String>> chunks = CollectionUtils.doChunk(customerNames, chunkSize);
