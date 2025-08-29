@@ -13,12 +13,12 @@ public class TrackingFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String trackingCode = UUID.randomUUID().toString();
-        MDC.put("trackingCode", trackingCode);
+        MDC.put("TRACKING_CODE", trackingCode);
 
         try {
             filterChain.doFilter(servletRequest, servletResponse);
-        }finally {
-            MDC.remove("trackingCode");
+        } finally {
+            MDC.remove("TRACKING_CODE");
         }
     }
 }

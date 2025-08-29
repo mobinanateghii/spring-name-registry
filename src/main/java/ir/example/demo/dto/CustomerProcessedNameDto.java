@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerNameDetailsDto {
+public class CustomerProcessedNameDto {
     private String name;
     private String reversedName;
     private int nameLength;

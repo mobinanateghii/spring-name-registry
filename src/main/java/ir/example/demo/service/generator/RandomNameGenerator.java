@@ -1,4 +1,4 @@
-package ir.example.demo.service;
+package ir.example.demo.service.generator;
 
 import ir.example.demo.exception.UniqueNameGenerationException;
 import ir.example.demo.model.NameRegistry;
@@ -54,7 +54,7 @@ public class RandomNameGenerator {
      * Generates full names sequentially
      *
      * @param randomFullNames the set to store generated names
-     * @param count the target number of names
+     * @param count           the target number of names
      */
     private void sequentialGenerate(Set<String> randomFullNames, Long count) {
         Random random = new Random();
@@ -72,7 +72,7 @@ public class RandomNameGenerator {
      * Generates full names in parallel
      *
      * @param randomFullNames the set to store generated names
-     * @param count the target number of names
+     * @param count           the target number of names
      */
     private void parallelGenerate(Set<String> randomFullNames, Long count) {
         LongStream.range(0, count)
@@ -84,7 +84,7 @@ public class RandomNameGenerator {
                     randomFullNames.add(String.format("%s %s %s", randFirstName, randMidName, randLastName));
                 });
 
-        if(randomFullNames.size() < count)
+        if (randomFullNames.size() < count)
             this.sequentialGenerate(randomFullNames, count);
     }
 
